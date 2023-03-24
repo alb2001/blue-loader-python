@@ -16,7 +16,7 @@
 *  limitations under the License.
 ********************************************************************************
 """
-
+import ssl
 import argparse
 
 def get_argparser():
@@ -74,7 +74,7 @@ if __name__ == '__main__':
 	queryParameters['targetId'] = args.targetId
 	queryParameters['perso'] = args.perso
 	queryString = urlparse.urlencode(queryParameters)
-	ws = create_connection(args.url + '?' + queryString)
+	ws = create_connection(args.url + '?' + queryString, sslopt={"cert_reqs": ssl.CERT_NONE})
 	while True:
 		result = json.loads(ws.recv())
 		if result['query'] == 'success':
